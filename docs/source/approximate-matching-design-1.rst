@@ -1,6 +1,6 @@
 ==================================================================
  Content Chunking and Fingerprint design for Approximate search
-========================================================================
+==================================================================
 
 
 This document details a key element of our design for efficient approximate similar software code
