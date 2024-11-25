@@ -1,171 +1,102 @@
-==================================================
-Data Structure Design for efficient index search
-==================================================
+==================================================================
+ Content Chunking and Fingerprint design for Approximate search
+========================================================================
 
 
-Our design is that fingerprints are matched approximately using the hamming distance as metric.
+This document details a key element of our design for efficient approximate similar software code
+discovery and identification at scale.
 
-We document here an approach and design for efficient storage and matching of indexed data under a
-hamming distance threshold.
+The design for matching approximate software code consists of these three elements:
 
-The core design to index fingerprints represented as their bit strings is to divide your hash bit
-string in several chunks and query on these chunks as an exact match or lookup.
+1. Content-defined chunking algorithm to split code into fragments and select a subset of these
+   fragments
 
-This is a "pre-filter" step. Then we can perform a bitwise hamming distance computation on the
-returned results which should be only a smaller subset of the overall indexed dataset. This can be
-done using data files or SQL tables.
+2. Fingerprinting fragments with a locality sensitive hashing (LSH) function for approximate
+   matching of these fragments. This fingerprint can embed multiple precision in a single bit
+   string to tune the search precision and organize the search in rounds of progressively
+   increasing precision.
 
-Our design is to use a database table. The fingerpint length we selected is typically 128 bits to
-512 bits. The examples here are with 32 bits for simplicity:
+3. Indexing-time approximate matching for deduplication where each new content fragment is added to
+   the index if it is not already matchable approximately in the index, avoiding large duplications
+   of indexed entries, which is inherent to the nature of open source code where reuse and vendoring
+   is a common thing.
 
-Say we have a bunch of 32 bits hashes in the DB and that we want to find every hash that are within
-a 4 bits hamming distance of our "query" hash:
-
-1. We create a table with four columns: each will contain an 8 bits (as a string or int) slice of the
-   32 bits hashes, islice1 to islice4.
-
-2. We slice our query hash the same way in qslice1 to qslice4.
-
-3. We query this table such that any of these clauses are true:
-   `qslice1=islice1 or qslice2=islice2 or qslice3=islice3 or qslice4=islice4`
-
-  This gives us every DB hash that are within 3 bits (`4 - 1`) of the query hash. It may contain more
-  results, and this is why there is a step 4.
-
-4. For each returned hash, we then compute the exact hamming distance pair-wise with our query hash
-   (reconstructing the index-side hash from the four slices)
+This document details the first two elements, e.g., our approach and design for content-chunking and
+fingerprinting.
 
 
-The number of operations in step 4 should be much less than a full pair-wise hamming computation of
-our whole table.
+We first describe the general context and problems we are trying to resolve, and then present the
+design itself.
 
 
-This approach was first described afaik by [Moses Charikar][1] in its "simhash" seminal [paper][2]
-and the corresponding Google [patent][3] expired in 2023-09-03::
+We carefully considered three fingerprinting approaches and two content-defined chunking approaches:
 
-    5. APPROXIMATE NEAREST NEIGHBOR SEARCH IN HAMMING SPACE
-    
-    [...]
-    
-    Given bit vectors consisting of d bits each, we choose N = O(n 1/(1+ ) ) random permutations of
-    the bits. For each random permutation σ, we maintain a sorted order O σ of the bit vectors, in
-    lexicographic order of the bits permuted by σ. Given a query bit vector q, we find the approximate
-    nearest neighbor by doing the following:
-    
-    
-    For each permutation σ, we perform a binary search on O σ to locate the two bit vectors closest to
-    q (in the lexicographic order obtained by bits permuted by σ). We now search in each of the sorted
-    orders O σ examining elements above and below the position returned by the binary search in order
-    of the length of the longest prefix that matches q.
+- for content chunking we considered hailstorm and winnowing: we selected a modified hailstorm
+  approach.
+- for fingerprinting we considered min-wise independent permutations, random projections,
+  and hash bucket fingerprinting: we selected random projections 
 
+The approach for selecting content is this:
 
+- We normalize text content by normalizing contiguous space and assimilated, lowercasing all words
+  and breaking on space and punctuation boundaries to obtain a sequence of tokens.
 
-[Monika Henziger][4] expanded on this in her paper
-["Finding near-duplicate web pages: a large-scale evaluation of algorithms"][5]::
+- We then compute ngrams over this sequence of tokens, using a value of N=5 based on tests and the
+  litterature, in particular [BURROWS] to obtain a sequence of ngrams.
 
-    3.3 The Results for Algorithm C
-    
-    We partitioned the bit string of each page into 12 non-overlapping 4-byte pieces, creating 20B
-    pieces, and computed the C-similarity of all pages that had at least one piece in common. This
-    approach is guaranteed to find all pairs of pages with difference up to 11, i.e., C-similarity 373,
-    but might miss some for larger differences.
-
-Note: Here the C-similarity is the same as the Hamming distance: The Hamming distance is the number
-of positions at which the corresponding bits differ while C-similarity is the number of positions at
-which the corresponding bits agree.
+- We then move a sliding window over this sequence of ngrams and use the hailstorm procedure. If
+  the windows first or last ngram hash is the smallest value, then we select all the ngrams in this
+  window.
 
 
-In addition we had a private communication with Monica Henzinger who kindly clarified the procedure
-principles::
+The approach for fingerprinting using random projections is a sequence of ngrams hashes from the
+previous step, to compute their Halohash bit average:
 
-    -------- Original Message --------
-    Subject: Question on hamming distance matching above a treshold
-    From: Philippe Ombredanne
-    To: Monika Henzinger
-    
-    Hello Monika:
-    
-    First le me tell you that I am a big fan of your research, especially in the domain of near
-    duplicates.
-    
-    In the paper: "Finding Near-Duplicate Web Pages:A Large-Scale Evaluation of Algorithms" you state:
-    
-    "3.3 The Results for Algorithm C
-    We partitioned the bit string of each page into 12 non- overlapping 4-byte pieces, creating 20B
-    pieces,and com- puted the C-similarity of all pages that had at least one piece in common."
-    
-    Then you claim:
-    
-    "This approach is guaranteed to find all pairs of pages with difference up to 11, i.e.,
-    C-similarity 373, but might miss some for larger differences."
-    
-    My question: what would be a sketch of a proof for this claim?
-    And how I could generalize this to other minimal hamming distances, pieces
-    size and length of the bit string?
-    
-    Thanks for your kind consideration
-    --
-    Cordially
-    Philippe
-    
-    
-    Subject: Re: Question on hamming distance matching above a treshold
-    From: Monika Henzinger
-    To: Philippe Ombredanne
-    
-    I broke the page into x pieces (x = 12).
-    Now I find all pages that agree in at least one piece and compute their C-similarity.
-    Assume the difference between 2 pages A and B is y, with y < x.
-    Then there must exist at least one of the x pieces that are the same in both A and B, 
-    since y differences can cause at most y different pieces, 
-    thus the remaining x - y >= 1 pieces must be identical. 
-    Since I compute the C-similarity for all pages with at least 1 identical piece, 
-    I will compute the C-similarity for A and B. 
-    If however A and B would differ in z >= x pieces, 
-    then it could be that ALL of the x pieces into which I broke A and B differ. 
-    Thus I might not compute their C-similarity because A and B do not agree on even a single piece.
-    I hope that explains it and shows you how to generalize it.
-    Monika
-    
-
-This hamming distance matching method is also explained in the paper [Detecting Near-Duplicates for
-Web Crawling][6] by Gurmeet Singh Manku, Arvind Jain, and Anish Das Sarma::
-
-    3. THE HAMMING DISTANCE PROBLEM
-    
-    Definition: Given a collection of f -bit fingerprints and a
-    query fingerprint F, identify whether an existing fingerprint
-    differs from F in at most k bits. (In the batch-mode version
-    of the above problem, we have a set of query fingerprints
-    instead of a single query fingerprint)
-    
-    
-    [...]
-    Intuition: Consider a sorted table of 2 d f -bit truly random fingerprints. 
-    Focus on just the most significant d bits in the table. A listing of these d-bit numbers amounts
-    to “almost a counter” in the sense that (a) quite a few 2 d bit- combinations exist, and (b) very
-    few d-bit combinations are duplicated. On the other hand, the least significant f − d bits are
-    “almost random”.
-    
-    Now choose d such that |d − d| is a small integer. Since
-    the table is sorted, a single probe suffices to identify all fingerprints which match F in d most
-    significant bit-positions. Since |d − d| is small, the number of such matches is also expected to be
-    small. For each matching fingerprint, we can easily figure out if it differs from F in at most k
-    bit-positions or not (these differences would naturally be restricted to the f − d least-significant
-    bit-positions).
-    
-    
-    The procedure described above helps us locate an existing fingerprint that differs from F in k
-    bit-positions, all of which are restricted to be among the least significant f − d bits of F. This
-    takes care of a fair number of cases. To cover all the cases, it suffices to build a small number of
-    additional sorted tables, as formally outlined in the next Section.
+- Transform each hashes in a bitstring, formaing a matrix of bits.
+- Sum the bits in each column assigning a value of -1 to 0 and +1 to 1.
+- Quantize the column sum values to 1 for positive sums and 0 for negative sums.
+- Transfor the resulting bitstring in a binary value. This is the fingerprint
 
 
-  [1]: https://en.wikipedia.org/wiki/Moses_Charikar
-  [2]: https://www.cs.princeton.edu/courses/archive/spr04/cos598B/bib/CharikarEstim.pdf
-  [3]: https://www.google.com/patents/US7158961
-  [4]: https://en.wikipedia.org/wiki/Monika_Henzinger
-  [5]: https://infoscience.epfl.ch/record/99373/files/Henzinger06.pdf
-  [6]: https://research.google.com/pubs/archive/33026.pdf
+References
+-------------------
 
+- [AIKEN] Winnowing: Local Algorithms for Document Fingerprinting
+  https://theory.stanford.edu/~aiken/publications/papers/sigmod03.pdf
+
+- [ABDEL-HAMID] Detecting the origin of text segments efficiently
+  https://infoscience.epfl.ch/record/138562/files/OriginTextSegments.pdf
+
+- [SEO] Local Text Reuse Detection
+  https://ciir-publications.cs.umass.edu/pub/web/getpdf.php?id=812
+
+- [JOHNSON-LINDENSTRAUSS] Johnson-Lindenstrauss lemma
+  https://en.wikipedia.org/wiki/Johnson–Lindenstrauss_lemma
+
+- [BRODER] On the resemblance and containment of documents
+  https://web.archive.org/web/20150131043133/http://gatekeeper.dec.com/ftp/pub/dec/SRC/publications/broder/positano-final-wpnums.pdf
+
+- [CHARIKAR] Similarity Estimation Techniques from Rounding Algorithms
+  https://www.cs.princeton.edu/courses/archive/spr04/cos598B/bib/CharikarEstim.pdf
+
+- [HENZIGER] Finding near-duplicate web pages: A large-scale evaluation of algorithms
+  https://infoscience.epfl.ch/record/99373/files/Henzinger06.pdf
+
+- [BURROWS] Efﬁcient plagiarism detection for large code repositories
+  https://people.eng.unimelb.edu.au/jzobel/fulltext/spe07.pdf
+
+- [SOOD-LOGUINOV] Probabilistic near-duplicate detection using simhash
+  https://irl.cse.tamu.edu/people/sadhan/papers/cikm2011.pdf
+
+- [STEIN] Efﬁcient plagiarism detection for large code repositories
+  https://downloads.webis.de/publications/papers/stein_2005a.pdf
+
+- [LULU] Overview of fingerprinting methods for local text reuse detection
+  https://www.researchgate.net/profile/Boumediene-Belkhouche/publication/310441711_Overview_of_Fingerprinting_Methods_for_Local_Text_Reuse_Detection/links/5bbc8344299bf1049b783ce0/Overview-of-Fingerprinting-Methods-for-Local-Text-Reuse-Detection.pdf
+
+- [JEKABSONS] Evaluation of Fingerprint Selection Algorithms for Local Text Reuse Detection
+  http://www.cs.rtu.lv/jekabsons/Files/Jek_ACSS2020.pdf
+
+- [MANKU] Detecting Near-Duplicates for Web Crawling
+  https://research.google.com/pubs/archive/33026.pdf
 
