@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-v0.0.0
+v0.5.0
 ------
 
-*xxxx-xx-xx* -- Initial release.
+- Initial release of samecode

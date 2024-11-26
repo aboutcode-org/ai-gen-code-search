@@ -1,12 +1,28 @@
-Welcome to nexb-skeleton's documentation!
-=========================================
+===================================================
+  samecode and ai-gen-code-search documentation
+===================================================
+
+
+Welcome to SameCode, a utility library to support AI-generated code search.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: Overview
 
-   skeleton-usage
-   contribute/contrib_doc
+    installation
+    contributing
+    changelog
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Reference Documentation
+
+    api
+    approximate-matching-design-1
+    approximate-matching-design-2
+    approximate-matching-design-3
+    approximate-matching-testing    
+
 
 Indices and tables
 ==================

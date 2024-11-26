@@ -9,16 +9,19 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("../../."))
+sys.path.insert(0, os.path.abspath("../../src"))
+sys.path.insert(0, os.path.abspath("../../src/samecode"))
 
 
 # -- Project information -----------------------------------------------------
 
-project = "nexb-skeleton"
-copyright = "nexB Inc. and others."
+project = "SameCode"
+copyright = "AboutCode, nexB Inc. and others."
 author = "AboutCode.org authors and contributors"
 
 
@@ -28,6 +31,7 @@ author = "AboutCode.org authors and contributors"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "sphinx_reredirects",
     "sphinx_rtd_theme",
@@ -35,6 +39,14 @@ extensions = [
     "sphinx.ext.extlinks",
     "sphinx_copybutton",
 ]
+
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ["_templates"]
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This pattern also affects html_static_path and html_extra_path.
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
 # Redirects for olds pages
@@ -53,21 +65,30 @@ intersphinx_mapping = {
     ),
 }
 
+# -----------------------------------------------------------------
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
-
+# The default options for autodoc directives.
+# They are applied to all autodoc directives automatically.
+# It must be a dictionary which maps option names to the values.
+autodoc_default_options = {
+    # Keep the source code order for the autodoc content, as we want to keep
+    # the processing order
+    "member-order": "bysource",
+    "exclude-members": (
+        "DoesNotExist, "
+        "MultipleObjectsReturned, "
+        "objects, "
+        "from_db, "
+        "get_absolute_url, "
+        "get_next_by_created_date, "
+        "get_previous_by_created_date"
+    ),
+}
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -79,9 +100,9 @@ master_doc = "index"
 
 html_context = {
     "display_github": True,
-    "github_user": "nexB",
-    "github_repo": "nexb-skeleton",
-    "github_version": "develop",  # branch
+    "github_user": "aboutcode-org",
+    "github_repo": "ai-gen-code-search",
+    "github_version": "main",  # branch
     "conf_py_path": "/docs/source/",  # path in the checkout to the docs root
 }
 
@@ -114,3 +135,21 @@ rst_prolog = """
 # -- Options for LaTeX output -------------------------------------------------
 
 latex_elements = {"classoptions": ",openany,oneside"}
+
+
+# user starts in light mode (Default Mode)
+default_dark_mode = False
+
+# Sphinx confuses JSON schema `ref` with Sphinx's doc `:ref:`
+suppress_warnings = ["ref.ref"]
+
+linkcheck_ignore = [
+    "http://localhost/",
+    "http://localhost:8001/",
+    "https://my-example.com/actor#main-key",
+    "https://ai-gen-code-search.readthedocs.io/en/latest",
+    # Linkcheck can't handle GitHub README anchors.
+    "https://github.com/aboutcode-org/ai-gen-code-search#readme",
+    # 403 Client Error: Forbidden for https://www.softwaretestinghelp.com
+    "https://www.softwaretestinghelp.com/how-to-write-good-bug-report/",
+]

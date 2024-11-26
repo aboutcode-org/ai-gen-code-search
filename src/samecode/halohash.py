@@ -5,15 +5,11 @@
 # See https://github.com/aboutcode-org/matchcode-toolkit for support or download.
 # See https://aboutcode.org for more information about nexB OSS projects.
 #
-
-import binascii
-
-from bitarray import bitarray
-from bitarray.util import count_xor
-from commoncode import codec
-from commoncode import hash as commoncode_hash
-
 """
+===========================
+  Halo Hash
+===========================
+
 Halo is a family of hash functions that have the un-common property that mostly similar -- but not
 identical -- inputs will hash to very similar outputs. This type of hash function is sometimes
 called a locality-sensitive hash function, because it is sensitive to the locality of the data being
@@ -143,48 +139,62 @@ Note that halo hashes are not restricted to a feature vector input, and can use 
 document vector space model and requires a global term (the TF/IDF) whereas these hashes do not.
 """
 
+import binascii
+
+from bitarray import bitarray
+from bitarray.util import count_xor
+from commoncode import codec
+from commoncode import hash as commoncode_hash
+
 
 class BitAverageHaloHash:
     """
     A bit matrix averaging hash.
 
     The high level processing sketch looks like this:
-    For an input of:
+    For an input of::
+
         ['this' ,'is', 'a', 'rose', 'great']:
 
-    * we first hash each list item to get something like
-        [4, 15, 2, 12, 12] (for instance with a very short hash function of 4 bits output)
+    * we first hash each list item to get something like::
 
-    or as bits this would be something like this:
+        [4, 15, 2, 12, 12]
 
-          ['0011',
-           '1110',
-           '0010',
-           '1100',
-           '1100']
+    (for instance with a very short hash function of 4 bits output)
 
-    * we sum up each bit positions/columns together:
-          ['0011',
-           '1110',
-           '0010',
-           '1100',
-           '1100']
-           -------
-            3331
+    or as bits this would be something like this::
+
+        ['0011',
+         '1110',
+         '0010',
+         '1100',
+         '1100']
+
+    * we sum up each bit positions/columns together::
+
+        ['0011',
+         '1110',
+         '0010',
+         '1100',
+         '1100']
+         -------
+          3331
 
     or stated otherwise: pos1=3, pos2=3, pos3=3, pos4=1
 
     * The mean value for a column is number of hashes/2 (2 because we use bits).
       Here mean = 5 hashes/2 = 2.5
 
-    * We compare the sum of each position with the mean and yield a bit:
+    * We compare the sum of each position with the mean and yield a bit::
+
         if pos sum > mean yield 1 else yield 0
             position1 = 3 > mean = 2.5 , then bit=1
             position2 = 3 > mean = 2.5 , then bit=1
             position3 = 3 > mean = 2.5 , then bit=1
             position4 = 1 < mean = 2.5 , then bit=0
 
-    * We build a hash by concatenating the resulting bits:
+    * We build a hash by concatenating the resulting bits::
+
          pos 1 + pos2 + pos3 + pos4 = '1110'
 
     In general, this hash seems to show a lower accuracy and higher sensitivity
@@ -277,6 +287,9 @@ class BitAverageHaloHash:
 
     @property
     def digest_size(self):
+        """
+        Digest size in bytes.
+        """
         return self.size_in_bits // 8
 
     def update(self, msg):
@@ -365,6 +378,9 @@ def bitarray_from_bytes(b):
 
 
 def byte_hamming_distance(b1, b2):
+    """
+    Return the Hamming distance between ``b1`` and ``b2`` byte strings
+    """
     b1 = binascii.unhexlify(b1)
     b2 = binascii.unhexlify(b2)
     b1 = bitarray_from_bytes(b1)
@@ -374,12 +390,11 @@ def byte_hamming_distance(b1, b2):
 
 def hamming_distance(bv1, bv2):
     """
-    Return the Hamming distance between `bv1` and `bv2`  bitvectors as the
-    number of equal bits for all positions. (e.g. the count of bits set to one
-    in an XOR between two bit strings.)
+    Return the Hamming distance between ``bv1`` and ``bv2``  bitvectors as the number of equal bits
+    for all positions. (e.g. the count of bits set to one in an XOR between two bit strings.)
 
-    `bv1` and `bv2` must both be  either hash-like Halohash instances (with a
-    hash() function) or bit array instances (that can be manipulated as-is).
+    ``bv1`` and ``bv2`` must both be  either hash-like Halohash instances (with a hash() function)
+    or bitarray instances (that can be manipulated as-is).
 
     See http://en.wikipedia.org/wiki/Hamming_distance
 
@@ -403,10 +418,11 @@ def hamming_distance(bv1, bv2):
 
 def slices(s, size):
     """
-    Given a sequence s, return a sequence of non-overlapping slices of `size`.
-    Raise an AssertionError if the sequence length is not a multiple of `size`.
+    Given a sequence s, return a sequence of non-overlapping slices of ``size``.
+    Raise an AssertionError if the sequence length is not a multiple of ``size``.
 
     For example:
+
     >>> slices([1, 2, 3, 4, 5, 6], 2)
     [(1, 2), (3, 4), (5, 6)]
     >>> slices([1, 2, 3, 4, 5, 6], 3)
@@ -428,8 +444,8 @@ def slices(s, size):
 
 def common_chunks_from_hexdigest(h1, h2, chunk_bytes_length=4):
     """
-    Compute the number of common chunks of byte length `chunk_bytes_length` between two
-    strings h1 and h2, each representing a BitAverageHaloHash hexdigest value.
+    Compute the number of common chunks of byte length ``chunk_bytes_length`` between two
+    strings ``h1`` and ``h2``, each representing a BitAverageHaloHash hexdigest value.
 
     For example:
 
@@ -439,7 +455,7 @@ def common_chunks_from_hexdigest(h1, h2, chunk_bytes_length=4):
     1
 
     Note: `a` and `b` start with the same 8 characters, where the next groups
-    of 8 have a few characters off
+    of 8 have a few characters off:
 
     >>> byte_hamming_distance(a, b)
     8
@@ -454,8 +470,8 @@ def common_chunks_from_hexdigest(h1, h2, chunk_bytes_length=4):
 
 def common_chunks(h1, h2, chunk_bytes_length=4):
     """
-    Compute the number of common chunks of byte length `chunk_bytes_length` between to
-    hashes h1 and h2 using the digest.
+    Compute the number of common chunks of byte length ``chunk_bytes_length`` between to
+    hashes ``h1`` and ``h2`` using their digest.
 
     Note that chunks that are all set to zeroes are matched too: they are be
     significant such as empty buckets of bucket hashes.
@@ -479,15 +495,11 @@ def common_chunks(h1, h2, chunk_bytes_length=4):
 
 def bit_to_num(bits):
     """
-    Return an int (or long) for a bit array.
-
-    For example:
-    TODO: test
+    Return an int (or long) for a bitarray.
     """
     return int(bits.to01(), 2)
 
 
-# TODO: add test!
 def decode_vector(b64_str):
     """
     Return a bit array from an encoded string representation.
