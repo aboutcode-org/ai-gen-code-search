@@ -4,7 +4,7 @@ Testing for approximate search
 
 The testing approach for approximate search consists in:
 
-- validating the intrisinc attributes of our fingerprinting approach wrt. to measuring similarity 
+- validating the intrisinc attributes of our fingerprinting approach wrt. to measuring similarity
 - aquiring test data to validate the end-to-end procedure
 - running end-to-end tests for similarity search
 
@@ -28,7 +28,7 @@ similarity that would be expected.
 The AI-Generated code tests consists of a code that is generated using OpenAI ChatGpl-3.5 and
 ChatGPT-4. We selected a subset of the data set to make it practical to run in our project's
 context. The data is self-described as::
-  
+
     This dataset includes a collection of ten LeetCode programming problems used in the study
     "Analyzing the Dependability of Large Language Models for Code Clone Generation". At the top
     level, you will find a CSV file containing all the initial LeetCode data. Each subdirectory at
@@ -60,11 +60,11 @@ variable. This pre-processing takes place before actual chunking the content and
 with it code that is essentially similar will be abstracted to its essence, ignoring naming styles
 and preferences.
 
-    
+
 References
 ---------------
 
-- [LLMZENODO] "Analyzing the Dependability of Large Language Models for Code Clone Generation" 
+- [LLMZENODO] "Analyzing the Dependability of Large Language Models for Code Clone Generation"
   https://zenodo.org/records/11398703
 
 - [GRUNE] "The software and text similarity tester SIM"

@@ -14,7 +14,7 @@ value. This approach is an application of the more text common "stemming" [STEMM
 pre-process terms to their "stem" in a search engine, but applied to source code::
 
     From Wikipedia, the free encyclopedia
-    	
+
     In linguistic morphology and information retrieval, stemming is the
     process of reducing inflected (or sometimes derived) words to their word
     stem, base or root form—generally a written word form. The stem need not
@@ -24,7 +24,7 @@ pre-process terms to their "stem" in a search engine, but applied to source code
     computer science since the 1960s. Many search engines treat words with
     the same stem as synonyms as a kind of query expansion, a process called
     conflation.
-    	
+
     A computer program or subroutine that stems word may be called a
     stemming program, stemming algorithm, or stemmer.
 
@@ -68,23 +68,23 @@ The description given in [GRUNE1989] is this::
 The provided [GRUNE] code contains extensive description and implementation of the principles, such
 as this mapping of C lanuages identifiers to a short one character code (in SIM's file clang.l)::
 
-	static const struct idf ppcmd[] = {
-		{"define",	META('d')},
-		{"else",	META('e')},
-		{"endif",	META('E')},
-		{"if",		META('i')},
-		{"ifdef",	META('I')},
-		{"ifndef",	META('x')},
-		{"include",	MTCT('I')},
-		{"line",	META('l')},
-		{"undef",	META('u')}
-	};
+    static const struct idf ppcmd[] = {
+        {"define",    META('d')},
+        {"else",    META('e')},
+        {"endif",    META('E')},
+        {"if",        META('i')},
+        {"ifdef",    META('I')},
+        {"ifndef",    META('x')},
+        {"include",    MTCT('I')},
+        {"line",    META('l')},
+        {"undef",    META('u')}
+    };
 
 The benefits of this improved design is that approximate search becomes impervious to changes
 in variables and identifier names: this captures the essence of the code without complex code
 parsing or comtrol flow analysis.
 
-  
+
 References
 ---------------
 
@@ -92,7 +92,7 @@ References
   https://en.wikipedia.org/wiki/Stemming
 
 - [GRUNE] The software and text similarity tester SIM
-  https://www.dickgrune.com/Programs/similarity_tester/index.html and 
+  https://www.dickgrune.com/Programs/similarity_tester/index.html and
   https://web.archive.org/web/19970606165903/http://www.cs.vu.nl/~dick/sim.html
 
 - [GRUNE1989] Detecting copied submissions in computer science workshops

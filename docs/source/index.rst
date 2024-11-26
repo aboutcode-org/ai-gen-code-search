@@ -21,7 +21,7 @@ Welcome to SameCode, a utility library to support AI-generated code search.
     approximate-matching-design-1
     approximate-matching-design-2
     approximate-matching-design-3
-    approximate-matching-testing    
+    approximate-matching-testing
 
 
 Indices and tables

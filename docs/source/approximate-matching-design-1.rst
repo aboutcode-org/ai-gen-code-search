@@ -34,7 +34,7 @@ We carefully considered three fingerprinting approaches and two content-defined 
 - for content chunking we considered hailstorm and winnowing: we selected a modified hailstorm
   approach.
 - for fingerprinting we considered min-wise independent permutations, random projections,
-  and hash bucket fingerprinting: we selected random projections 
+  and hash bucket fingerprinting: we selected random projections
 
 The approach for selecting content is this:
 
