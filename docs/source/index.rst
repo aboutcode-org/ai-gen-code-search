@@ -9,9 +9,12 @@ Welcome to SameCode, a utility library to support AI-generated code search.
     :maxdepth: 2
     :caption: Overview
 
+    project-intro
     installation
-    contributing
     changelog
+    authors
+    contributing
+    code-of-conduct
 
 .. toctree::
     :maxdepth: 2

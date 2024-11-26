@@ -1,6 +1,6 @@
-================================
-  AI-Generated Code Search
-================================
+=========================================
+  AI-Generated Code Search and SameCode
+=========================================
 
 ``Search, detect, and identify AI-generated code.``
 
