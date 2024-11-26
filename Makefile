@@ -46,9 +46,11 @@ clean:
 test:
 	@echo "-> Run the test suite"
 
-docs: dev
-	@echo "-> Build the docs."
+docs-conf:
 	./configure --docs
+
+docs: docs-conf
+	@echo "-> Build the docs."
 	rm -rf docs/_build/
 	@${ACTIVATE} sphinx-build docs/source docs/_build/
 
