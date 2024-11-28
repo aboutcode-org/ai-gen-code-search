@@ -9,7 +9,7 @@
 
 """
 ===========================
-  Chunking
+  Chunking module
 ===========================
 
 Utilities to chunk and select content chunk using ngrams and hailstorm.
@@ -21,7 +21,7 @@ from itertools import islice
 
 def ngrams(iterable, ngram_length):
     """
-    Return an iterable of ngrams of length `ngram_length` given an `iterable`.
+    Return an iterable of ngrams of length `ngram_length` given an `iterable` of strings.
     Each ngram is a tuple of `ngram_length` items.
 
     The returned iterable is empty if the input iterable contains less than
@@ -76,12 +76,12 @@ def select_ngrams(ngrams, with_pos=False):
         shingle is chosen is 2/k if all tokens in the shingle are different.
 
     For example:
-    
+
     >>> list(select_ngrams([(2, 1, 3), (1, 1, 3), (5, 1, 3), (2, 6, 1), (7, 3, 4)]))
     [(2, 1, 3), (1, 1, 3), (5, 1, 3), (2, 6, 1), (7, 3, 4)]
 
     Positions can also be included. In this case, tuple of (pos, ngram) are returned:
-    
+
     >>> list(select_ngrams([(2, 1, 3), (1, 1, 3), (5, 1, 3), (2, 6, 1), (7, 3, 4)], with_pos=True))
     [(0, (2, 1, 3)), (1, (1, 1, 3)), (2, (5, 1, 3)), (3, (2, 6, 1)), (4, (7, 3, 4))]
 

@@ -3,11 +3,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # See http://www.apache.org/licenses/LICENSE-2.0 for the license text.
 # See https://github.com/aboutcode-org/matchcode-toolkit for support or download.
-# See https://aboutcode.org for more information about nexB OSS projects.
+# See https://aboutcode.org for more information about AboutCode FOSSprojects.
 #
 """
 ===========================
-  Halo Hash
+  Halo Hash module
 ===========================
 
 Halo is a family of hash functions that have the un-common property that mostly similar -- but not
@@ -278,11 +278,11 @@ class BitAverageHaloHash:
         try:
             # TODO: pick one hash algorithm
             self.hashmodule = commoncode_hash.get_hasher(size_in_bits)
-        except:
+        except Exception as e:
             raise Exception(
                 "No available hash module for the requested "
                 "hash size in bits: %(size_in_bits)d" % locals()
-            )
+            ) from e
         self.update(msg)
 
     @property
@@ -346,6 +346,9 @@ class BitAverageHaloHash:
         return int(count_xor(self.hash(), other.hash()))
 
     def hash(self):
+        """
+        Return this hash as a bitarray.
+        """
         return bitarray_from_bytes(self.digest())
 
     @classmethod
