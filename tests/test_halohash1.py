@@ -6,6 +6,7 @@ from pathlib import Path
 
 from commoncode.codec import num_to_bin
 from commoncode.testcase import FileDrivenTesting
+
 from samecode import halohash
 
 test_env = FileDrivenTesting()
@@ -18,7 +19,8 @@ class TestHalohash:
         a = halohash.BitAverageHaloHash(None, size_in_bits=512)
         [a.update(num_to_bin(x)) for x in range(4096)]
         expected = (
-            b"df38b3eddba771b5e6ddeb0851c6651c95d26bd5e8944c10125cd50968759927c51238fb83d0ff4de5f6a0"
+            b"df38b3eddba771b5e6ddeb0851c6651c95d26bd5e8"
+            b"944c10125cd50968759927c51238fb83d0ff4de5f6a0"
             b"c05de0837d00f6e47c4a880592f1c87b175df5db15"
         )
         assert a.hexdigest() == expected

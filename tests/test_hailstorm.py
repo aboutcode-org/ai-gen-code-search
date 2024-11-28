@@ -4,8 +4,10 @@
 #
 #
 from hashlib import sha1
-from samecode.chunking import ngrams
+
 from commoncode.codec import bin_to_num
+
+from samecode.chunking import ngrams
 
 """
 This is a set of local tests to compare hailstorm with winnowing.
@@ -112,7 +114,6 @@ def discard_covered_neigh1(ngs):
     for i in range(len(ngs)):
         tok = ngs[i]
         previous_neighbours = ngs[i - 1 : i]
-        next_neighbours = ngs[i + 1 : i + 2]
         neighbours = [n for n in previous_neighbours if n in kept]
         allnt = []
         for neb in neighbours:
@@ -169,10 +170,11 @@ def test_compare_functions():
 
     sample = (
         """The algorithm first fingerprints every token and
-                then selects a shingle s iff the minimum fingerprint
-                value of all k tokens in s occurs at the first or
-                the last position of s and potentially also
-                in-between"""
+        then selects a shingle s iff the minimum fingerprint
+        value of all k tokens in s occurs at the first or
+        the last position of s and potentially also
+        in-between
+        """
         * 10
     )
 

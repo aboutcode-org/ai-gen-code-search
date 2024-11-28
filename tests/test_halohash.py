@@ -2,7 +2,7 @@
 # Copyright (c) AboutCode.org and others. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 # See http://www.apache.org/licenses/LICENSE-2.0 for the license text.
-# See https://aboutcode.org for more information about nexB OSS projects.
+# See https://aboutcode.org for more information about AboutCode FOSSprojects.
 #
 
 import copy

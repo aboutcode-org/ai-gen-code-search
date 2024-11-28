@@ -4,9 +4,9 @@
 #
 #
 
+import configparser
 import subprocess
 import unittest
-import configparser
 
 
 class BaseTests(unittest.TestCase):
