@@ -17,9 +17,17 @@ In this project, SameCode is a low level Python library that exposes features to
 These features are fundamental building blocks for code fragments and snippets matching
 approximately.
 
+WARNING: this is under heavy development and not yet a finished project!
+
+Note that using this library alone is not straightforward. Consider looking at the design and
+reference documentation at https://ai-gen-code-search.readthedocs.io for more details.
+It is designed to be used in the context of a larger code matching feature with MatchCode and the
+PurlDB: https://github.com/aboutcode-org/purldb
+
+
 - PyPI: https://pypi.org/project/samecode/
 - Homepage: https://github.com/aboutcode-org/ai-gen-code-search
-
+- Documentation: https://ai-gen-code-search.readthedocs.io
 
 Installation
 ------------
