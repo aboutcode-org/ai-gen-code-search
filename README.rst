@@ -1,5 +1,5 @@
 =========================================
-  AI-Generated Code Search and SameCode
+  AI-Generated Code Search 
 =========================================
 
 ``Search, detect, and identify AI-generated code.``
@@ -86,8 +86,6 @@ this critical knowledge, improving overall programmer productivity and adoption 
 code generation tools.
 
 
-
-
 Approach and Design
 -----------------------
 
@@ -111,7 +109,6 @@ in the index, avoiding large duplications of FOSS code.
 
 Implementation
 ----------------------------
-
 
 Existing code fragment search solutions are either closed data, expensive proprietary closed source
 solutions, or use code indexes that are too big to share. None are designed or adapted to support
@@ -156,6 +153,8 @@ The high level plan for this project is to:
 - Deploy public demo system
 - Present at FOSDEM and webinars for community dissemination
 
+
+This repository also contains a SameCode library. See README_samecode.rst for details.
 
 
 Acknowledgements, Funding, Support and Sponsoring

@@ -1,9 +1,9 @@
-.. _api:
+.. _samecode_api:
 
-API
-===========
+SameCode library API
+=================================
 
-This section is a describes the API of SameCode functions.
+This section is a describes the API of SameCode classes and functions.
 
 .. automodule:: samecode.chunking
    :members:

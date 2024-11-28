@@ -1,9 +1,10 @@
 ===================================================
-  samecode and ai-gen-code-search documentation
+  AI-Generated Code Search documentation
 ===================================================
 
-
-Welcome to SameCode, a utility library to support AI-generated code search.
+Welcome to the AI-generated code search project, a suite of tools and libraries integrated in the
+AboutCode stack to discover the origin of code fragments, possibly derived from open source code
+using AI code genertion.
 
 .. toctree::
     :maxdepth: 2
@@ -18,9 +19,15 @@ Welcome to SameCode, a utility library to support AI-generated code search.
 
 .. toctree::
     :maxdepth: 2
+    :caption: SameCode library
+
+    samecode_overview
+    samecode_api
+
+.. toctree::
+    :maxdepth: 2
     :caption: Reference Documentation
 
-    api
     approximate-matching-design-1
     approximate-matching-design-2
     approximate-matching-design-3
