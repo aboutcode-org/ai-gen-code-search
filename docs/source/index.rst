@@ -19,6 +19,12 @@ using AI code genertion.
 
 .. toctree::
     :maxdepth: 2
+    :caption: Tutorials
+
+    e2e/detect-ai-gen-code.rst
+
+.. toctree::
+    :maxdepth: 2
     :caption: SameCode library
 
     samecode_overview
