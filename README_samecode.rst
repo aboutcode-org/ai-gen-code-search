@@ -45,7 +45,7 @@ The preferred development setup is with these commands to create a development e
     cd ai-gen-code-search
     make dev # to configure the environemnt
     make test # to run tests
-    make check # to run code checks 
+    make check # to run code checks
 
 
 Alternatively, a checkout of the https://github.com/aboutcode-org/ai-gen-code-search repo
@@ -114,31 +114,31 @@ In the module: ``samecode.halohash``, the main functions and classes are:
 
 - ``bit_to_num(bits)``
      Return an int (or long) for a bitarray.
- 
+
 - ``bitarray_from_bytes(b)``
      Return a bitarray built from a byte string b.
- 
+
 - ``byte_hamming_distance(b1, b2)``
      Return the Hamming distance between ``b1`` and ``b2`` byte strings
- 
+
 - ``common_chunks(h1, h2, chunk_bytes_length=4)``
      Compute the number of common chunks of byte length ``chunk_bytes_length`` between to
      hashes ``h1`` and ``h2`` using their digest.
- 
+
 - ``common_chunks_from_hexdigest(h1, h2, chunk_bytes_length=4)``
      Compute the number of common chunks of byte length ``chunk_bytes_length`` between two
      strings ``h1`` and ``h2``, each representing a BitAverageHaloHash hexdigest value.
- 
+
 - ``decode_vector(b64_str)``
      Return a bit array from an encoded string representation.
- 
+
 - ``hamming_distance(bv1, bv2)``
      Return the Hamming distance between ``bv1`` and ``bv2``  bitvectors as the number of equal bits
      for all positions. (e.g. the count of bits set to one in an XOR between two bit strings.)
-     
+
      ``bv1`` and ``bv2`` must both be  either hash-like Halohash instances (with a hash() function)
      or bitarray instances (that can be manipulated as-is).
- 
+
 - ``slices(s, size)``
      Given a sequence s, return a sequence of non-overlapping slices of ``size``.
      Raise an AssertionError if the sequence length is not a multiple of ``size``.
@@ -170,8 +170,8 @@ Acknowledgements, Funding, Support and Sponsoring
 --------------------------------------------------------
 
 |europa|
-    
-|ngisearch|   
+
+|ngisearch|
 
 Funded by the European Union. Views and opinions expressed are however those of the author(s) only
 and do not necessarily reflect those of the European Union or European Commission. Neither the
@@ -186,7 +186,7 @@ This project is also supported and sponsored by:
 - AboutCode ASBL
 
 
-|aboutcode| 
+|aboutcode|
 
 
 .. |ngisearch| image:: https://www.ngisearch.eu/download/FlamingoThemes/NGISearch2/NGISearch_logo_tag_icon.svg?rev=1.1
@@ -201,7 +201,7 @@ This project is also supported and sponsored by:
     :alt: NGI logo
 
 .. |europa| image:: etc/eu.funded.png
-    :target: http://ec.europa.eu/index_en.htm
+    :target: https://commission.europa.eu/index_en
     :height: 120
     :alt: Europa logo
 

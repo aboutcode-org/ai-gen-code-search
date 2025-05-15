@@ -14,7 +14,6 @@ from samecode.chunking import select_ngrams
 
 
 class TestNgrams(TestCase):
-
     def test_ngrams(self):
         tokens = """
             Redistribution and use in source and binary are permitted.

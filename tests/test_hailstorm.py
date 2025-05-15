@@ -144,7 +144,9 @@ def discard_covered_neigh2(ngs):
                 else (
                     [] + pneib2[0]
                     if len(pneib2) == 2 and pneib2[1]
-                    else [] + nneib2[0] if len(nneib2) == 2 and nneib2[1] else []
+                    else [] + nneib2[0]
+                    if len(nneib2) == 2 and nneib2[1]
+                    else []
                 )
             )
         )
@@ -167,7 +169,6 @@ def _uniq(data):
 
 
 def test_compare_functions():
-
     sample = (
         """The algorithm first fingerprints every token and
         then selects a shingle s iff the minimum fingerprint

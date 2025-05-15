@@ -6,7 +6,7 @@ In this tutorial, we first generate code using ChatGPT, then scan the generated 
 using the MatchCode pipeline.
 
 
-- Visit https://chatgpt.com/.
+- Visit chatgpt.com
 
 - Enter this prompt to generate code:
 
