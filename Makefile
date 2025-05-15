@@ -55,6 +55,8 @@ docs:
 
 docs-check:
 	@${ACTIVATE} sphinx-build -E -W -b html docs/source docs/_build/
+
+docs-check-links:
 	@${ACTIVATE} sphinx-build -E -W -b linkcheck docs/source docs/_build/
 
-.PHONY: conf dev check valid clean test docs docs-check
+.PHONY: conf dev check valid clean test docs docs-check docs-check-links
