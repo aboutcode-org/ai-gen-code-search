@@ -11,11 +11,6 @@ build:
   tools:
     python: "3.11"
 
-# Build PDF & ePub
-formats:
-  - epub
-  - pdf
-
 # Where the Sphinx conf.py file is located
 sphinx:
    configuration: docs/source/conf.py
