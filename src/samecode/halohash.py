@@ -360,9 +360,9 @@ class BitAverageHaloHash:
         """
         size_in_bits = hashes[0].size_in_bits
         for h in hashes:
-            assert isinstance(
-                hash, cls
-            ), "all hashes should be a BitAverageHaloHash, not {}".format(type(h))
+            assert isinstance(hash, cls), (
+                "all hashes should be a BitAverageHaloHash, not {}".format(type(h))
+            )
             assert h.size_in_bits == size_in_bits
 
         all_columns = [h.columns for h in hashes]
@@ -399,7 +399,7 @@ def hamming_distance(bv1, bv2):
     ``bv1`` and ``bv2`` must both be  either hash-like Halohash instances (with a hash() function)
     or bitarray instances (that can be manipulated as-is).
 
-    See http://en.wikipedia.org/wiki/Hamming_distance
+    See https://en.wikipedia.org/wiki/Hamming_distance
 
     For example:
 

@@ -14,7 +14,6 @@ test_env.test_data_dir = str((Path(__file__).parent / "testfiles").absolute())
 
 
 class TestHalohash:
-
     def test_BitAverageHaloHash_simple(self):
         a = halohash.BitAverageHaloHash(None, size_in_bits=512)
         [a.update(num_to_bin(x)) for x in range(4096)]
@@ -32,7 +31,7 @@ class TestHalohash:
 
     def _random_HaloHash_test(self, size_in_bits, chunk_size):
         """
-        Using two files created with dd from a Linux /dev/urandom as an input,
+        Test using two files created with dd from a Linux /dev/urandom as an input,
         this test split each file in chunks. A halohash is computed over the
         chunks and the hamming distance is computed for each file. The second
         files is progressively injected one chunk at a time from the first

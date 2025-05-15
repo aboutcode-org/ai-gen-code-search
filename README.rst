@@ -1,5 +1,5 @@
 =========================================
-  AI-Generated Code Search 
+  AI-Generated Code Search
 =========================================
 
 ``Search, detect, and identify AI-generated code.``
@@ -161,8 +161,8 @@ Acknowledgements, Funding, Support and Sponsoring
 --------------------------------------------------------
 
 |europa|
-    
-|ngisearch|   
+
+|ngisearch|
 
 Funded by the European Union. Views and opinions expressed are however those of the author(s) only
 and do not necessarily reflect those of the European Union or European Commission. Neither the
@@ -177,7 +177,7 @@ This project is also supported and sponsored by:
 - AboutCode ASBL
 
 
-|aboutcode| 
+|aboutcode|
 
 
 .. |ngisearch| image:: https://www.ngisearch.eu/download/FlamingoThemes/NGISearch2/NGISearch_logo_tag_icon.svg?rev=1.1
@@ -192,7 +192,7 @@ This project is also supported and sponsored by:
     :alt: NGI logo
 
 .. |europa| image:: etc/eu.funded.png
-    :target: http://ec.europa.eu/index_en.htm
+    :target: https://commission.europa.eu/index_en
     :height: 120
     :alt: Europa logo
 

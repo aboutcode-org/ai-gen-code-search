@@ -15,6 +15,7 @@ using AI code genertion.
     changelog
     authors
     contributing
+    contribute/contrib_doc
     code-of-conduct
 
 .. toctree::

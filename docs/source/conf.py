@@ -144,8 +144,8 @@ default_dark_mode = False
 suppress_warnings = ["ref.ref"]
 
 linkcheck_ignore = [
-    "http://localhost/",
-    "http://localhost:8001/",
+    "https://localhost/",
+    "https://localhost:8001/",
     "https://my-example.com/actor#main-key",
     "https://ai-gen-code-search.readthedocs.io/en/latest",
     # Linkcheck can't handle GitHub README anchors.

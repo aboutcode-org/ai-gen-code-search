@@ -67,7 +67,8 @@ def select_ngrams(ngrams, with_pos=False):
     algorithm. If `with_pos` is True also include the starting position for the
     ngram in the original sequence.
 
-    Definition from the paper: http://www2009.eprints.org/7/1/p61.pdf ::
+    Definition from the paper
+    https://web.archive.org/web/20090520131041/http://www2009.eprints.org/7/1/p61.pdf ::
 
         The algorithm first fingerprints every token and then selects a shingle s
         if the minimum fingerprint value of all k tokens in s occurs at the first

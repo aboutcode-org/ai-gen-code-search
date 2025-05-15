@@ -93,7 +93,7 @@ References
 
 - [GRUNE] The software and text similarity tester SIM
   https://www.dickgrune.com/Programs/similarity_tester/index.html and
-  https://web.archive.org/web/19970606165903/http://www.cs.vu.nl/~dick/sim.html
+  https://web.archive.org/web/19970606165903/https://www.cs.vu.nl/~dick/sim.html
 
 - [GRUNE1989] Detecting copied submissions in computer science workshops
   https://www.dickgrune.com/Programs/similarity_tester/Paper.pdf

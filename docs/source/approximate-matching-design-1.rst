@@ -92,7 +92,7 @@ References
   https://downloads.webis.de/publications/papers/stein_2005a.pdf
 
 - [LULU] Overview of fingerprinting methods for local text reuse detection
-  https://www.researchgate.net/profile/Boumediene-Belkhouche/publication/310441711_Overview_of_Fingerprinting_Methods_for_Local_Text_Reuse_Detection/links/5bbc8344299bf1049b783ce0/Overview-of-Fingerprinting-Methods-for-Local-Text-Reuse-Detection.pdf
+  https://ieeexplore.ieee.org/document/7880050
 
 - [JEKABSONS] Evaluation of Fingerprint Selection Algorithms for Local Text Reuse Detection
   http://www.cs.rtu.lv/jekabsons/Files/Jek_ACSS2020.pdf
