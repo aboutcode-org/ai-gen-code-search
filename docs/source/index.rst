@@ -28,6 +28,7 @@ using AI code genertion.
     :maxdepth: 2
     :caption: SameCode library
 
+    samecode_installation
     samecode_overview
     samecode_api
 

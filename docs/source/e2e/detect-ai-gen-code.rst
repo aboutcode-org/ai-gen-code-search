@@ -1,3 +1,5 @@
+.. _e2e-ai-gen-code:
+
 Step-by-step: Find AI-generated code with AboutCode
 ========================================================
 
