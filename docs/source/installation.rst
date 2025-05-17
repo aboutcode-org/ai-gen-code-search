@@ -3,49 +3,67 @@
 Installation
 ============
 
-Welcome to **SameCode** installation guide. This guide describes how to install
-SameCode. Please read and follow the instructions carefully to ensure
-your installation is functional and operational.
+This is an installation guide to evaluate the AI-generated code search features of AboutCode.
 
-The **preferred SameCode installation** is to install with pip. Or to clone and work from git.
+The search for AI-generated code needs to have these sub-systems deployed and installed:
 
-Install with pip
-^^^^^^^^^^^^^^^^^^^^^^^
+- PurlDB: a database of software package metadata, and an index of their files and file
+  fingerprints.
 
-    pip install samecode
+- MatchCode: a backend code matching service that has direct access to the PurlDB database and
+  executes a rich pipeline of code matching steps, from exact package, file tree or file, to
+  approximate code tree, file and code fragments, including possibly generated and refactored code
+  fragments.
 
+- ScanCode.io: a frontend code scanning service that receives the codebase to analyse as inputs,
+  then scans and computes fingerprints to send to the MatchCode backend for matching, before
+  presenting consolidated matching results.
 
-Or clone and configure
-^^^^^^^^^^^^^^^^^^^^^^^
+This guide describes and provide pointers on how to install each of the three components.
 
-**Clone the git** `SameCode repo <https://github.com/aboutcode-org/ai-gen-code-search>`_,
-and configure your environment::
-
-    git clone https://github.com/aboutcode-org/ai-gen-code-search.git && cd ai-gen-code-search
-    make dev
-
-
-Run tests
-^^^^^^^^^^^
-
-**Run the tests suite**::
-
-    make test
-
-At this point, the SameCode app should be available for your usage.
+Alternatively, we maintain a publicly accessible, fully deployed evaluation system with each of
+these three components. Please reach out to hello@aboutcode.org to gain access to this environment.
 
 
-Supported Platforms
-^^^^^^^^^^^^^^^^^^^
+Install the backend: PurlDB and MatchCode.io
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**SameCode** has been tested and is supported on the following operating systems:
+Follow instructions to get started at:
+https://aboutcode.readthedocs.io/projects/PURLdb/en/latest/getting-started/index.html
 
-    #. **Debian-based** Linux distributions
+Then follow installation instructions at:
 
-.. note::
-    **macOS**, **Windows**, and other **Linux** distributions are likely working too, but have
-    not been tested.
+- https://aboutcode.readthedocs.io/projects/PURLdb/en/latest/getting-started/install.html
+- https://aboutcode.readthedocs.io/projects/PURLdb/en/latest/how-to-guides/installation.html
 
-.. warning::
-     On **Windows** SameCode can likely **only** run with WSL2.
+This will also install MatchCode.io.
 
+
+Install the frontend: ScanCode.io
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Follow insructions at:
+https://scancodeio.readthedocs.io/en/latest/installation.html
+
+
+
+Configure ScanCode.io for PurlDB access
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Follow insructions at:
+https://scancodeio.readthedocs.io/en/latest/application-settings.html#purldb
+
+
+
+Run a simple test
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+See instructions at:
+https://aboutcode.readthedocs.io/projects/PURLdb/en/latest/how-to-guides/matchcode.html
+
+
+You can also index the package ``pkg:npm/inherits@2.0.3`` to support the step-by-step
+end to end tutorial :ref:`e2e-ai-gen-code`.
+
+
+See also https://zenodo.org/records/15449709 for a larger dataset of popular package PURLs.
