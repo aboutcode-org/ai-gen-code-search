@@ -1,5 +1,5 @@
 ==================================================
-Testing for approximate search
+Testing for approximate search mechanics
 ==================================================
 
 The testing approach for approximate search consists in:
@@ -9,7 +9,7 @@ The testing approach for approximate search consists in:
 - running end-to-end tests for similarity search
 
 
-We use these trest data:
+We use these test data:
 
 - synthetic random data to validate the attributes of the fingerprint ability to detect similarity
 - a public data set available on Zenodo [LLMZENODO]
@@ -17,15 +17,18 @@ We use these trest data:
 The test data and scripts are stored in https://github.com/aboutcode-org/matchcode-tests/
 
 
-Test report and status as of 2024-11-12:
+Test report and status
+-----------------------
 
 The synthetic data tests perform according to expectations and observed results are close
-to expected theoritical results. See the companiion spreadsheet halohash-distance-plots.ods
+to expected theoritical results.
+
+See the :download:`companiion spreadsheet <halohash-distance-plots.ods>`
 that plots content similarity buildup against the observed hamming distance computed between
 fingerprints. The results are roughly a line and they match the expected according buildup of
 similarity that would be expected.
 
-The AI-Generated code tests consists of a code that is generated using OpenAI ChatGpl-3.5 and
+The AI-Generated code tests consists of a code that is generated using OpenAI ChatGpt-3.5 and
 ChatGPT-4. We selected a subset of the data set to make it practical to run in our project's
 context. The data is self-described as::
 
