@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath("../../src/samecode"))
 
 # -- Project information -----------------------------------------------------
 
-project = "SameCode"
+project = "MatchCode - AI-generated code search and Code snippet matching"
 copyright = "AboutCode, nexB Inc. and others."
 author = "AboutCode.org authors and contributors"
 
